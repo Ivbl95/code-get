@@ -6,6 +6,13 @@ import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
 import com.getcapacitor.annotation.CapacitorPlugin;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.HttpURLConnection;
+
+import org.json.*;
+
 @CapacitorPlugin(name = "CodeGet")
 public class CodeGetPlugin extends Plugin {
 
@@ -21,20 +28,39 @@ public class CodeGetPlugin extends Plugin {
     }
 
     @PluginMethod
-    public void checkUpdates(PluginCall call) {
+    public void checkUpdates(PluginCall call) throws Exception {
         boolean result = false;
-        String downloadLink = this.checkUpdateExist(); // Проверка обновления
+        JSONObject obj = new JSONObject(this.checkUpdateExist());
+        String downloadLink = obj.getJSONObject("update_info").getString("download_url");
+
         if (downloadLink != "") { // Если есть обновления
-        this.downloadUpdatesFiles();
-        result = true;
+            this.downloadUpdatesFiles();
+            result = true;
         }
+
         JSObject ret = new JSObject();
         ret.put("result", result);
+        ret.put("downloadLink", downloadLink);
         call.resolve(ret);
     }
 
-    public String checkUpdateExist() { // асинхронность?
+    public String checkUpdateExist() throws Exception {
+        String url = "https://codeget-api.premiumbonus.su/update/update_check?deployment_key=8&app_version=72.0.38&platform=android";
+        URL obj = new URL(url);
+        HttpURLConnection connection = (HttpURLConnection) obj.openConnection();
 
+        connection.setRequestMethod("GET");
+        
+        BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+        String inputLine;
+        StringBuffer response = new StringBuffer();
+        
+        while ((inputLine = in.readLine()) != null) {
+            response.append(inputLine);
+        }
+        in.close();
+
+        return response.toString();
     }
 
     public void downloadUpdatesFiles() { // асинхронность?
