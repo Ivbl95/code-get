@@ -19,4 +19,57 @@ public class CodeGetPlugin extends Plugin {
         ret.put("value", implementation.echo(value));
         call.resolve(ret);
     }
+
+    @PluginMethod
+    public void checkUpdates(PluginCall call) {
+        boolean result = false;
+        String downloadLink = this.checkUpdateExist(); // Проверка обновления
+        if (downloadLink != "") { // Если есть обновления
+        this.downloadUpdatesFiles();
+        result = true;
+        }
+        JSObject ret = new JSObject();
+        ret.put("result", result);
+        call.resolve(ret);
+    }
+
+    public String checkUpdateExist() { // асинхронность?
+
+    }
+
+    public void downloadUpdatesFiles() { // асинхронность?
+    // Установка обновления
+    // Имплементация способа хранить файлы для установки
+    }
+
+    @PluginMethod
+    public void installUpdates(PluginCall call) {
+        boolean result = false;
+
+        this.unpackingArchive();
+        this.removeUpdatesFiles();
+
+        JSObject ret = new JSObject();
+        ret.put("result", result);
+        call.resolve(ret);
+    }
+
+    @PluginMethod
+    public void rejectUpdates(PluginCall call) {
+        boolean result = false;
+
+        this.removeUpdatesFiles();
+
+        JSObject ret = new JSObject();
+        ret.put("result", result);
+        call.resolve(ret);
+    }
+
+    public void unpackingArchive() {
+    // Распаковка
+    }
+
+    public void removeUpdatesFiles() {
+    // Удаление архива
+    }
 }

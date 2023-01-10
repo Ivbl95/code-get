@@ -14,6 +14,9 @@ npx cap sync
 <docgen-index>
 
 * [`echo(...)`](#echo)
+* [`checkUpdates()`](#checkupdates)
+* [`installUpdates()`](#installupdates)
+* [`rejectUpdates()`](#rejectupdates)
 
 </docgen-index>
 
@@ -23,14 +26,47 @@ npx cap sync
 ### echo(...)
 
 ```typescript
-echo(options: { value: string; }) => Promise<{ value: string; }>
+echo(options: { value: string; }) => Promise<unknown>
 ```
 
 | Param         | Type                            |
 | ------------- | ------------------------------- |
 | **`options`** | <code>{ value: string; }</code> |
 
-**Returns:** <code>Promise&lt;{ value: string; }&gt;</code>
+**Returns:** <code>Promise&lt;unknown&gt;</code>
+
+--------------------
+
+
+### checkUpdates()
+
+```typescript
+checkUpdates() => Promise<unknown>
+```
+
+**Returns:** <code>Promise&lt;unknown&gt;</code>
+
+--------------------
+
+
+### installUpdates()
+
+```typescript
+installUpdates() => Promise<unknown>
+```
+
+**Returns:** <code>Promise&lt;unknown&gt;</code>
+
+--------------------
+
+
+### rejectUpdates()
+
+```typescript
+rejectUpdates() => Promise<unknown>
+```
+
+**Returns:** <code>Promise&lt;unknown&gt;</code>
 
 --------------------
 
