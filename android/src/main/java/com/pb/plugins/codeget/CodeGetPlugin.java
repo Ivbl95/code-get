@@ -29,8 +29,15 @@ public class CodeGetPlugin extends Plugin {
 
     @PluginMethod
     public void checkUpdates(PluginCall call) throws Exception {
+        String update_channel = call.getString("update_channel");
+        String current_app_version = call.getString("current_app_version");
+        String platform = call.getString("platform");
+
+        String url = "https://codeget-api.premiumbonus.su/update/update_check?";
+        url += "deployment_key=" + update_channel + "&app_version=" + current_app_version + "&platform=" + platform;
+
         boolean result = false;
-        JSONObject obj = new JSONObject(this.checkUpdateExist());
+        JSONObject obj = new JSONObject(this.checkUpdateExist(url));
         String downloadLink = obj.getJSONObject("update_info").getString("download_url");
 
         if (downloadLink != "") { // Если есть обновления
@@ -44,8 +51,8 @@ public class CodeGetPlugin extends Plugin {
         call.resolve(ret);
     }
 
-    public String checkUpdateExist() throws Exception {
-        String url = "https://codeget-api.premiumbonus.su/update/update_check?deployment_key=8&app_version=72.0.38&platform=android";
+    public String checkUpdateExist(String url) throws Exception {
+
         URL obj = new URL(url);
         HttpURLConnection connection = (HttpURLConnection) obj.openConnection();
 

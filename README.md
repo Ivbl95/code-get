@@ -14,7 +14,7 @@ npx cap sync
 <docgen-index>
 
 * [`echo(...)`](#echo)
-* [`checkUpdates()`](#checkupdates)
+* [`checkUpdates(...)`](#checkupdates)
 * [`installUpdates()`](#installupdates)
 * [`rejectUpdates()`](#rejectupdates)
 
@@ -38,11 +38,15 @@ echo(options: { value: string; }) => Promise<unknown>
 --------------------
 
 
-### checkUpdates()
+### checkUpdates(...)
 
 ```typescript
-checkUpdates() => Promise<unknown>
+checkUpdates(options: { update_channel: string; current_app_version: string; platform: string; }) => Promise<unknown>
 ```
+
+| Param         | Type                                                                                    |
+| ------------- | --------------------------------------------------------------------------------------- |
+| **`options`** | <code>{ update_channel: string; current_app_version: string; platform: string; }</code> |
 
 **Returns:** <code>Promise&lt;unknown&gt;</code>
 

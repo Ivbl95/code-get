@@ -8,8 +8,12 @@ export class CodeGetWeb extends WebPlugin implements CodeGetPlugin {
         return options;
     }
 
-    public async checkUpdates(): Promise<unknown> {
-        return;
+    public async checkUpdates(options: {
+        update_channel: string,
+        current_app_version: string,
+        platform: string,
+    }): Promise<unknown> {
+        return options;
     }
 
     public async installUpdates(): Promise<unknown> {
