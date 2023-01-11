@@ -19,15 +19,6 @@ public class CodeGetPlugin extends Plugin {
     private CodeGet implementation = new CodeGet();
 
     @PluginMethod
-    public void echo(PluginCall call) {
-        String value = call.getString("value");
-
-        JSObject ret = new JSObject();
-        ret.put("value", implementation.echo(value));
-        call.resolve(ret);
-    }
-
-    @PluginMethod
     public void checkUpdates(PluginCall call) throws Exception {
         String update_channel = call.getString("update_channel");
         String current_app_version = call.getString("current_app_version");

@@ -13,7 +13,6 @@ npx cap sync
 
 <docgen-index>
 
-* [`echo(...)`](#echo)
 * [`checkUpdates(...)`](#checkupdates)
 * [`installUpdates()`](#installupdates)
 * [`rejectUpdates()`](#rejectupdates)
@@ -22,21 +21,6 @@ npx cap sync
 
 <docgen-api>
 <!--Update the source file JSDoc comments and rerun docgen to update the docs below-->
-
-### echo(...)
-
-```typescript
-echo(options: { value: string; }) => Promise<unknown>
-```
-
-| Param         | Type                            |
-| ------------- | ------------------------------- |
-| **`options`** | <code>{ value: string; }</code> |
-
-**Returns:** <code>Promise&lt;unknown&gt;</code>
-
---------------------
-
 
 ### checkUpdates(...)
 
