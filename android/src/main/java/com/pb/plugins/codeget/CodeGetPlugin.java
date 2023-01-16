@@ -18,30 +18,40 @@ public class CodeGetPlugin extends Plugin {
 
     private CodeGet implementation = new CodeGet();
 
+    // Метод, активируемый из плагина 'Проверка обновлений'
     @PluginMethod
     public void checkUpdates(PluginCall call) throws Exception {
+
+        // Получить данные из МП для генерации ссылки
         String update_channel = call.getString("update_channel");
         String current_app_version = call.getString("current_app_version");
         String platform = call.getString("platform");
 
+        // Генерация url для получения ссылки на обновления из codeget
         String url = "https://codeget-api.premiumbonus.su/update/update_check?";
         url += "deployment_key=" + update_channel + "&app_version=" + current_app_version + "&platform=" + platform;
 
-        boolean result = false;
+        // Получение url на скачивание обновлений
         JSONObject obj = new JSONObject(this.checkUpdateExist(url));
         String downloadLink = obj.getJSONObject("update_info").getString("download_url");
 
-        if (downloadLink != "") { // Если есть обновления
-            this.downloadUpdatesFiles();
+        // Проверка доступности обновлений
+        boolean result = false;
+        if (downloadLink != "") {
+
+            // Метод установки обновлений
+            this.downloadUpdatesFiles(downloadLink);
             result = true;
         }
 
+        // Возврат объекта в МП с информацией об успешности выполненной проверки обновления
         JSObject ret = new JSObject();
         ret.put("result", result);
         ret.put("downloadLink", downloadLink);
         call.resolve(ret);
     }
 
+    // Метод обращения к codeget и получения url на скачивание обновлений
     public String checkUpdateExist(String url) throws Exception {
 
         URL obj = new URL(url);
@@ -61,39 +71,51 @@ public class CodeGetPlugin extends Plugin {
         return response.toString();
     }
 
-    public void downloadUpdatesFiles() { // асинхронность?
-    // Установка обновления
-    // Имплементация способа хранить файлы для установки
+    // Метод загрузки и сохранения архива
+    public void downloadUpdatesFiles(String downloadLink) {
+        // URL url = new URL(downloadLink);
+        // InputStream inputStream = url.openStream();
+        // Files.copy(inputStream, new File("/data/data/com.premiumbonus.jamm.agrarium/files/file.zip").toPath());
     }
 
+    // Метод , активируемый из плагина 'Установка обновлений'
     @PluginMethod
     public void installUpdates(PluginCall call) {
         boolean result = false;
 
+        // Распаковка архива
         this.unpackingArchive();
+
+        // Удаление архива
         this.removeUpdatesFiles();
 
+        // Возврат объекта об успешности установки
         JSObject ret = new JSObject();
         ret.put("result", result);
         call.resolve(ret);
     }
 
+    // Метод , активируемый из плагина 'Отказ от обновлений'
     @PluginMethod
     public void rejectUpdates(PluginCall call) {
         boolean result = false;
 
+        // Удаление архива
         this.removeUpdatesFiles();
 
+        // Возврат объекта об успешности отказа
         JSObject ret = new JSObject();
         ret.put("result", result);
         call.resolve(ret);
     }
 
+    // Распаковка архива в нужные папки
     public void unpackingArchive() {
-    // Распаковка
+
     }
 
-    public void removeUpdatesFiles() {
     // Удаление архива
+    public void removeUpdatesFiles() {
+
     }
 }
